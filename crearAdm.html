@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav id="navOfUser"></nav>
+    <nav id="navOfAdm"></nav>
+    <div class="container">
+      <div class="nombre">
+        <p>Ingrese el nombre:</p>
+        <input id="Nombre" />
+      </div>
+      <div class="email">
+        <p>Ingrese el email:</p>
+        <input id="email" />
+      </div>
+      <div class="clave">
+        <p>Ingrese la clave:</p>
+        <input id="clave" />
+      </div>
+      <div class="creador">
+        <p>Es Creador</p>
+        <select id="creador">
+          <option value="1">si</option>
+          <option value="0">no</option>
+        </select>
+      </div>
+      <button class="btn" onclick="botonguardarclick()">Guardar</button>
+    </div>
+  </body>
+</html>
+<script src="jquery2.js"></script>
+<script src="claseAdm.js"></script>
+<script>
+  $.get("./navBar.html", data => $("#navOfUser").html(data));
+  $.get("./admBar.html", data => $("#navOfAdm").html(data));
+  function botonguardarclick() {
+    //crea el usuario con todos los parametros
+    var usuarioinstanciada = new _usuario(
+      0,
+      document.getElementById("Nombre").value,
+      document.getElementById("clave").value,
+      document.getElementById("email").value,
+      0,
+      document.getElementById("creador").value
+    );
+    usuarioinstanciada
+      .Guardar()
+      //llama a guardar
+      .then(() => console.log("Éxito!"))
+      .catch(() => console.log("Mal!"));
+  }
+</script>
+<style>
+  .container {
+    width: 410px;
+    display: grid;
+    grid-template-areas:
+      "nombre nombre"
+      "clave clave"
+      "email email"
+      "imagen imagen"
+      "creador creador"
+      "btn btn";
+    justify-items: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    grid-row-gap: 15px;
+    background: lightblue;
+  }
+  .btn {
+    grid-area: btn;
+  }
+  .nombre {
+    grid-area: nombre;
+    display: grid;
+    justify-items: center;
+  }
+  .clave {
+    grid-area: clave;
+    display: grid;
+    justify-items: center;
+  }
+  .email {
+    grid-area: email;
+    display: grid;
+    justify-items: center;
+  }
+  .creador {
+    grid-area: creador;
+    display: grid;
+    justify-items: center;
+  }
+</style>

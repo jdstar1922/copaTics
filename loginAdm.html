@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav id="navOfUser"></nav>
+    <nav id="navOfAdm"></nav>
+    <div class="container">
+      <div class="nombre">
+        <p>Ingrese el email:</p>
+        <input id="email" />
+      </div>
+      <div class="clave">
+        <p>Ingrese la clave:</p>
+        <input id="clave" />
+      </div>
+      <button class="btn" onclick="botonenviarclick()">Enviar</button>
+    </div>
+  </body>
+</html>
+<script src="jquery2.js"></script>
+<script src="claseAdm.js"></script>
+<script>
+  $.get("./navBar.html", data => $("#navOfUser").html(data));
+  $.get("./admBar.html", data => $("#navOfAdm").html(data));
+  function botonenviarclick() {
+    //crea el usuario con todos los parametros
+    var adm = new _usuario(
+      0,
+      "",
+      document.getElementById("clave").value,
+      document.getElementById("email").value,
+      "",
+      0
+    );
+    adm
+      .Login()
+      .then(resolve => {
+        console.log(resolve[0]);
+        localStorage.setItem("usuariologueado", JSON.stringify(resolve));
+        location.href = "index.html";
+      })
+      .catch(err => console.log("Mal!"));
+  }
+</script>
+<style>
+  .container {
+    display: grid;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    background: lightblue;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

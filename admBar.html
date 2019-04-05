@@ -1,0 +1,58 @@
+<nav id="admNav">
+  <a href="crearAdm.html">
+    <img src="iconos/icon.png" alt="crearAdmin" />
+  </a>
+  <a href="crudEquipos.html">
+    <img src="iconos/teamwork.png" alt="crudEquipos" />
+  </a>
+  <a href="crearGrupos.html">
+    <img src="iconos/networking.png" alt="crearGrupos" />
+  </a>
+</nav>
+<script>
+  /* if (!localStorage.getItem("usuariologueado")) {
+    document.getElementById("admNav").style.display = "none";
+  } else {
+    if (
+      JSON.parse(localStorage.getItem("usuariologueado"))[0].Creador == true
+    ) {
+      document.getElementById("admNav").style.display = "grid";
+    } else {
+      document.getElementById("admNav").style.display = "none";
+    }
+  } */
+</script>
+<style>
+  * {
+    margin: 0;
+    padding: 0%;
+    text-decoration: none;
+  }
+  #admNav {
+    background: gray;
+    height: 50%;
+    width: 60px;
+    display: grid;
+    grid-template-areas: "auto" "auto" "auto";
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+  #admNav a {
+    color: white;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: 101px;
+    width: 60px;
+    transition: 0.3s;
+  }
+  #admNav a img {
+    width: 48px;
+  }
+  #admNav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+</style>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav id="navOfUser"></nav>
+    <nav id="navOfAdm"></nav>
+    <section id="containerGrupos">
+      <div id="grupoUno">
+        <h1>Grupo1</h1>
+      </div>
+      <div id="grupoDos">
+        <h1>Grupo2</h1>
+      </div>
+      <div id="grupoTres">
+        <h1>Grupo3</h1>
+      </div>
+    </section>
+  </body>
+</html>
+<style>
+  #containerGrupos {
+    background: lightblue;
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    display: grid;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+    justify-items: center;
+  }
+  #grupoUno,
+  #grupoDos,
+  #grupoTres {
+    background: white;
+    padding: 45px;
+    overflow-y: auto;
+  }
+</style>
+<script src="jquery2.js"></script>
+<script src="claseEquipo.js"></script>
+<script>
+  $.get("./navBar.html", data => $("#navOfUser").html(data));
+  $.get("./admBar.html", data => $("#navOfAdm").html(data));
+  let EquipoIns = new Equipo();
+  const EQUIPO1 = document.getElementById("grupoUno");
+  const EQUIPO2 = document.getElementById("grupoDos");
+  const EQUIPO3 = document.getElementById("grupoTres");
+  EquipoIns.Seleccionartodos().then(equipos => {
+    console.log(equipos);
+    for (equipo in equipos) {
+      console.log(equipos[equipo].Nombre);
+      console.log(equipos[equipo].Grupo);
+      let div = document.createElement("div");
+      div.innerHTML = equipos[equipo].Nombre;
+      if (equipos[equipo].Grupo == 1) {
+        EQUIPO1.appendChild(div);
+      }
+      if (equipos[equipo].Grupo == 2) {
+        EQUIPO2.appendChild(div);
+      }
+      if (equipos[equipo].Grupo == 3) {
+        EQUIPO3.appendChild(div);
+      }
+    }
+  });
+</script>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav id="navOfUser"></nav>
+    <nav id="navOfAdm"></nav>
+    <section id="centro">
+      <h1>Presione aqui para crear los grupos</h1>
+      <button id="btnCrearGrupos" onclick="crearGrupos()">Crear!</button>
+    </section>
+    <section id="formularioPartido">
+      <div class="escogerGrupos">
+        <h1>Escoja un grupo</h1>
+        <select id="escogerUnGrupo">
+          <option id="opcionGrupo1" value="1">Grupo1</option>
+          <option id="opcionGrupo2" value="2">Grupo2</option>
+          <option id="opcionGrupo3" value="3">Grupo3</option>
+        </select>
+        <button id="btnEscogerGrupos" onclick="grupoEscogido()">Listo!</button>
+      </div>
+      <div class="escogerEquipos">
+        <h1>Escoja los Equipos y la Fecha</h1>
+        <select id="escogerEquipo1">
+          <option id="opcionEquipo11" value=""></option>
+          <option id="opcionEquipo12" value=""></option>
+          <option id="opcionEquipo13" value=""></option>
+        </select>
+        <select id="escogerEquipo2">
+          <option id="opcionEquipo21" value=""></option>
+          <option id="opcionEquipo22" value=""></option>
+          <option id="opcionEquipo23" value=""></option>
+        </select>
+        <input type="date" id="fecha" />
+        <button id="btnCrearPartidos" onclick="crearPartidos()">Listo!</button>
+      </div>
+    </section>
+  </body>
+</html>
+<script src="claseEquipo.js"></script>
+<script src="clasePartido.js"></script>
+<script>
+  let randomNumbers = new Array();
+  let equiposOrdenados = new Array();
+  let primerGrupo = new Array();
+  let segundoGrupo = new Array();
+  let tercerGrupo = new Array();
+  function crearGrupos() {
+    let EquipoIns = new Equipo();
+    EquipoIns.Seleccionartodos().then(response => {
+      for (element in response) {
+        randomNum(response);
+        response[element].Numero = randomNumbers[element];
+        let EquiposIns = new Equipo(
+          response[element]._id,
+          response[element].Nombre,
+          response[element].Especialidad,
+          response[element].Anio,
+          response[element].Puntos,
+          response[element].Goles,
+          response[element].Numero,
+          response[element].Grupo,
+          response[element].jugadores
+        );
+        EquiposIns.Modificar();
+        equiposOrdenados[response[element].Numero] = response[element];
+      }
+
+      let equiposPorGrupo = response.length / 3;
+      primerGrupo = equiposOrdenados.splice(0, equiposPorGrupo);
+      segundoGrupo = equiposOrdenados.splice(0, equiposPorGrupo);
+      tercerGrupo = equiposOrdenados.splice(0, equiposPorGrupo);
+      for (element in primerGrupo) {
+        primerGrupo[element].Grupo = 1;
+        let EquipoIns = new Equipo(
+          primerGrupo[element]._id,
+          primerGrupo[element].Nombre,
+          primerGrupo[element].Especialidad,
+          primerGrupo[element].Anio,
+          primerGrupo[element].Puntos,
+          primerGrupo[element].Goles,
+          primerGrupo[element].Numero,
+          primerGrupo[element].Grupo,
+          primerGrupo[element].jugadores
+        );
+        EquipoIns.Modificar();
+      }
+      for (element in segundoGrupo) {
+        segundoGrupo[element].Grupo = 2;
+        let EquipoIns = new Equipo(
+          segundoGrupo[element]._id,
+          segundoGrupo[element].Nombre,
+          segundoGrupo[element].Especialidad,
+          segundoGrupo[element].Anio,
+          segundoGrupo[element].Puntos,
+          segundoGrupo[element].Goles,
+          segundoGrupo[element].Numero,
+          segundoGrupo[element].Grupo,
+          segundoGrupo[element].jugadores
+        );
+        EquipoIns.Modificar();
+      }
+      for (element in tercerGrupo) {
+        tercerGrupo[element].Grupo = 3;
+        let EquipoIns = new Equipo(
+          tercerGrupo[element]._id,
+          tercerGrupo[element].Nombre,
+          tercerGrupo[element].Especialidad,
+          tercerGrupo[element].Anio,
+          tercerGrupo[element].Puntos,
+          tercerGrupo[element].Goles,
+          tercerGrupo[element].Numero,
+          tercerGrupo[element].Grupo,
+          tercerGrupo[element].jugadores
+        );
+        EquipoIns.Modificar();
+      }
+    });
+    $("#formularioPartido").css("display", "grid");
+  }
+  let grupoEsc = "";
+  function grupoEscogido() {
+    $(".escogerGrupos").css("display", "none");
+    $(".escogerEquipos").css("display", "grid");
+    grupoEsc = document.getElementById("escogerUnGrupo").value;
+    grupoEsc = parseInt(grupoEsc);
+    let EquipoIns = new Equipo("", "", "", "", "", "", "", grupoEsc, "");
+    EquipoIns.Seleccionarporgrupo().then(response => {
+      console.log(response);
+      document.getElementById("opcionEquipo11").value = response[0].Nombre;
+      document.getElementById("opcionEquipo11").innerHTML = response[0].Nombre;
+      document.getElementById("opcionEquipo21").value = response[0].Nombre;
+      document.getElementById("opcionEquipo21").innerHTML = response[0].Nombre;
+      document.getElementById("opcionEquipo12").value = response[1].Nombre;
+      document.getElementById("opcionEquipo12").innerHTML = response[1].Nombre;
+      document.getElementById("opcionEquipo22").value = response[1].Nombre;
+      document.getElementById("opcionEquipo22").innerHTML = response[1].Nombre;
+      document.getElementById("opcionEquipo13").value = response[2].Nombre;
+      document.getElementById("opcionEquipo13").innerHTML = response[2].Nombre;
+      document.getElementById("opcionEquipo23").value = response[2].Nombre;
+      document.getElementById("opcionEquipo23").innerHTML = response[2].Nombre;
+    });
+  }
+  function crearPartidos() {
+    let equipo1 = document.getElementById("escogerEquipo1").value;
+    let equipo2 = document.getElementById("escogerEquipo2").value;
+    let fecha = document.getElementById("fecha").value;
+    let PartidoIns = new Partido("", equipo1, equipo2, fecha, {}, grupoEsc);
+    PartidoIns.Guardar().then(response => console.log(response));
+  }
+  function randomNum(response) {
+    numero = Math.floor(Math.random() * response.length);
+    if (!randomNumbers.includes(numero)) {
+      randomNumbers.push(numero);
+    } else {
+      randomNum(response);
+    }
+  }
+</script>
+<style>
+  #centro {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 65%;
+    height: 20%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 1fr 1fr;
+  }
+  #btnCrearGrupos {
+    height: 30px;
+    width: 60px;
+  }
+  #formularioPartido {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 50%;
+    height: 50%;
+    background: lightblue;
+    transition: 1s;
+  }
+  .escogerGrupos {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-row-gap: 15px;
+  }
+  .escogerEquipos {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    grid-row-gap: 15px;
+    grid-column-gap: 5px;
+    grid-template-areas:
+      "escogerEquiposTitulo escogerEquiposTitulo"
+      "auto auto"
+      "escogerEquiposFecha escogerEquiposFecha"
+      "escogerEquiposBtn escogerEquiposBtn";
+  }
+  .escogerEquipos h1 {
+    grid-area: escogerEquiposTitulo;
+  }
+  .escogerEquipos input {
+    grid-area: escogerEquiposFecha;
+  }
+  .escogerEquipos button {
+    grid-area: escogerEquiposBtn;
+  }
+</style>
+<script src="jquery2.js"></script>
+<script>
+  $.get("./navBar.html", data => $("#navOfUser").html(data));
+  $.get("./admBar.html", data => $("#navOfAdm").html(data));
+</script>

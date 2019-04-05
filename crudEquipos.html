@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav id="navOfUser"></nav>
+    <nav id="navOfAdm"></nav>
+    <container id="container">
+      <section id="crear">
+        <h1>Crear Equipo</h1>
+        <button id="btnCrear">Ok!</button>
+      </section>
+      <section id="modificar">
+        <h1>Modificar Equipo</h1>
+        <button id="btnModificar">Ok!</button>
+      </section>
+      <section id="borrar">
+        <h1>Borrar Equipo</h1>
+        <button id="btnBorrar">Ok!</button>
+      </section>
+    </container>
+    <section id="formularioCrear" class="formularios">
+      <h1 id="tituloCrear">Ingresa un equipo</h1>
+      <div id="Nombre">
+        <h2>Nombre:</h2>
+        <input type="text" id="inputNombre" placeholder="Nombre" />
+      </div>
+      <div id="Jugadores">
+        <h2>Jugadores</h2>
+        <h3>separe cada jugador por un enter</h3>
+        <textarea id="inputJugadores" placeholder="Jugadores"></textarea>
+      </div>
+      <div id="Especialidad">
+        <h2>Especialidad</h2>
+        <input type="text" id="inputEspecialidad" placeholder="Especialidad" />
+      </div>
+      <div id="Anio">
+        <h2>Año</h2>
+        <input type="text" id="inputAnio" placeholder="Año" />
+      </div>
+      <button id="cerrar">X</button>
+      <button id="guardar" onclick="guardar()">Guardar!</button>
+    </section>
+    <section id="formularioEscogerEquipo" class="formularios">
+      <h1>Escoge la pelicula</h1>
+      <button id="cerrarModificar">X</button>
+      <div id="padreEquipos"></div>
+    </section>
+    <section id="formularioModificar" class="formularios">
+      <h1 id="tituloModificar">Modifica el equipo</h1>
+      <div id="NombreModificar">
+        <h2>Nombre:</h2>
+        <input type="text" id="inputNombreM" placeholder="Nombre" />
+      </div>
+      <div id="JugadoresModificar">
+        <h2>Jugadores</h2>
+        <h3>Añada cada jugador separado por un enter</h3>
+        <textarea id="inputJugadoresM" placeholder="Jugadores"></textarea>
+      </div>
+      <div id="EspecialidadModificar">
+        <h2>Especialidad</h2>
+        <input type="text" id="inputEspecialidadM" placeholder="Especialidad" />
+      </div>
+      <div id="AnioModificar">
+        <h2>Año</h2>
+        <input type="text" id="inputAnioM" placeholder="Año" />
+      </div>
+      <div id="PuntosModificar">
+        <h2>Puntos</h2>
+        <input type="text" id="inputPuntosM" placeholder="Puntos" />
+      </div>
+      <div id="GolesModificar">
+        <h2>Goles</h2>
+        <input type="text" id="inputGolesM" placeholder="Goles" />
+      </div>
+      <button id="cerrar">X</button>
+      <button id="modificarbtn">Modificar!</button>
+    </section>
+    <section id="borrarConf">
+      <h1 id="tituloConf">¿Esta seguro que quiere borrar este equipo?</h1>
+      <button id="si">Sí</button>
+      <button id="no">No</button>
+    </section>
+  </body>
+</html>
+<script src="jquery2.js"></script>
+<script src="claseEquipo.js"></script>
+<script>
+  $.get("./navBar.html", data => $("#navOfUser").html(data));
+  $.get("./admBar.html", data => $("#navOfAdm").html(data));
+  $("#btnCrear").on("click", () => {
+    abrirCrear();
+  });
+  $("#btnModificar").on("click", () => {
+    abrirEscojerEquipo(1);
+  });
+  $("#btnBorrar").on("click", () => {
+    abrirEscojerEquipo(2);
+  });
+  $("#cerrar, #cerrarModificar").on("click", () => {
+    $(".formularios").fadeOut();
+  });
+  function abrirCrear() {
+    $(".formularios").css("display", "none");
+    $("#formularioCrear").css("display", "grid");
+  }
+  function abrirEscojerEquipo(accion) {
+    console.log(accion);
+    $(".formularios").css("display", "none");
+    $("#formularioEscogerEquipo").css("display", "grid");
+    let EquipoIns = new Equipo();
+    EquipoIns.Seleccionartodos().then(response => {
+      $(".equiposHijos").remove();
+      for (equipo in response) {
+        let div = document.createElement("span");
+        div.innerHTML = response[equipo].Nombre;
+        div.className = "equiposHijos";
+        document.getElementById("padreEquipos").style.gridTemplateAreas +=
+          '"auto"';
+        document.getElementById("padreEquipos").style.gridTemplateRows +=
+          " 25px";
+        div.id = equipo;
+        div.addEventListener("click", () => {
+          equipos(response, div.id, accion);
+        });
+        document.getElementById("padreEquipos").appendChild(div);
+      }
+    });
+  }
+  function equipos(equipo, indice, accion) {
+    $(".formularios").css("display", "none");
+    equipo = equipo[indice];
+    if (accion == 1) {
+      $("#formularioModificar").css("display", "grid");
+      document.getElementById("modificarbtn").addEventListener("click", () => {
+        if (document.getElementById("inputNombreM").value != equipo.nombre) {
+          equipo.Nombre = document.getElementById("inputNombreM").value;
+        }
+        if (document.getElementById("inputJugadoresM").value != "") {
+          jugadores = document
+            .getElementById("inputJugadoresM")
+            .value.split(/\n/);
+          jugadores = jugadores.filter((value, index, arr) => {
+            return value != "";
+          });
+          equipo.Jugadores.push(jugadores);
+        }
+        if (
+          document.getElementById("inputEspecialidadM").value !=
+          equipo.Especialidad
+        ) {
+          equipo.Especialidad = document.getElementById(
+            "inputEspecialidadM"
+          ).value;
+        }
+        if (document.getElementById("inputAnioM").value != equipo.anio) {
+          equipo.Anio = document.getElementById("inputAnioM").value;
+        }
+        if (document.getElementById("inputPuntosM").value != equipo.puntos) {
+          equipo.Puntos = document.getElementById("inputPuntosM").value;
+        }
+        if (document.getElementById("inputGolesM").value != equipo.goles) {
+          equipo.Goles = document.getElementById("inputGolesM").value;
+        }
+        let EquipoIns = new Equipo(
+          equipo._id,
+          equipo.Nombre,
+          equipo.Especialidad,
+          equipo.Anio,
+          equipo.Puntos,
+          equipo.Goles,
+          0,
+          "",
+          equipo.jugadores
+        );
+        EquipoIns.Modificar()
+          .then(response => console.log("modificado con éxito", response))
+          .catch(err => console.error(err));
+      });
+    }
+    if (accion == 2) {
+      $("#borrarConf").css("display", "grid");
+      $("#si").on("click", () => {
+        let EquipoIns = new Equipo(equipo._id);
+        console.log(equipo);
+        EquipoIns.Eliminar().then(response =>
+          console.log("eliminado", response)
+        );
+        $("#borrarConf").css("display", "none");
+      });
+      $("#no").on("click", () => $("#borrarConf").css("display", "none"));
+    }
+  }
+  function abrirBorrar() {
+    $(".formularios").css("display", "none");
+    $("#formularioEscogerEquipo").css("display", "grid");
+  }
+  function guardar() {
+    let nombre = document.getElementById("inputNombre").value;
+    let jugadores = document.getElementById("inputJugadores").value.split(/\n/);
+    jugadores = jugadores.filter((value, index, arr) => {
+      return value != "";
+    });
+    let especialidad = document.getElementById("inputEspecialidad").value;
+    let anio = document.getElementById("inputAnio").value;
+    let EquipoIns = new Equipo(
+      0,
+      nombre,
+      especialidad,
+      anio,
+      0,
+      0,
+      0,
+      "",
+      jugadores
+    );
+    EquipoIns.Guardar().then(response =>
+      console.log("Guardado con éxito!", response)
+    );
+  }
+</script>
+<style>
+  #container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-areas: "crear crear" "modificar borrar";
+    justify-items: center;
+    align-items: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+  }
+  #container section {
+    display: grid;
+    grid-template-areas: "auto" "auto";
+    justify-items: center;
+    align-items: center;
+    height: 60%;
+    width: 300px;
+    border-radius: 50px;
+    background: gray;
+    color: white;
+  }
+  #container section button {
+    width: 50%;
+  }
+  #crear {
+    grid-area: crear;
+  }
+  #modificar {
+    grid-area: modificar;
+  }
+  #borrar {
+    grid-area: borrar;
+  }
+  #cerrar {
+    grid-area: cerrar;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 30px;
+  }
+  #cerrarModificar {
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 30px;
+  }
+  .formularios {
+    display: none;
+  }
+  #formularioCrear {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 65%;
+    height: 80%;
+    background: blue;
+    grid-template-areas:
+      "tituloCrear tituloCrear tituloCrear cerrar"
+      "nombreCrear especialidadCrear especialidadCrear anioCrear "
+      "jugadoresCrear jugadoresCrear jugadoresCrear jugadoresCrear"
+      "guardar guardar guardar guardar";
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+  }
+  #tituloCrear {
+    grid-area: tituloCrear;
+  }
+  #Nombre {
+    grid-area: nombreCrear;
+  }
+  #Jugadores {
+    grid-area: jugadoresCrear;
+  }
+  #Especialidad {
+    grid-area: especialidadCrear;
+  }
+  #Anio {
+    grid-area: anioCrear;
+  }
+  #guardar {
+    grid-area: guardar;
+  }
+  #inputJugadores {
+    width: 100%;
+    height: 80px;
+  }
+  #formularioEscogerEquipo {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 8px;
+    top: 50%;
+    left: 50%;
+    width: 65%;
+    height: 79%;
+    background: blue;
+    overflow-y: scroll;
+    grid-template-rows: 30px 80%;
+    grid-template-columns: auto auto;
+  }
+  #padreEquipos {
+    display: grid;
+    overflow-y: auto;
+  }
+  #formularioModificar {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 65%;
+    height: 80%;
+    background: blue;
+    grid-template-areas:
+      "tituloModificar tituloModificar tituloModificar cerrar"
+      "nombreModificar especialidadModificar especialidadModificar anioModificar "
+      "puntosModificar puntosModificar golesModificar golesModificar "
+      "jugadoresModificar jugadoresModificar jugadoresModificar jugadoresModificar"
+      "modificar modificar modificar modificar";
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  }
+  #tituloModificar {
+    grid-area: tituloModificar;
+  }
+  #NombreModificar {
+    grid-area: nombreModificar;
+  }
+  #JugadoresModificar {
+    grid-area: jugadoresModificar;
+  }
+  #EspecialidadModificar {
+    grid-area: especialidadModificar;
+  }
+  #AnioModificar {
+    grid-area: anioModificar;
+  }
+  #PuntosModificar {
+    grid-area: puntosModificar;
+  }
+  #GolesModificar {
+    grid-area: golesModificar;
+  }
+  #modificarbtn {
+    grid-area: modificar;
+  }
+  #borrarConf {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background: blue;
+    grid-template-areas: "tituloconf tituloconf" "si no";
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 1fr 1fr;
+  }
+  #tituloConf {
+    grid-area: tituloconf;
+  }
+  #si {
+    grid-area: si;
+  }
+  #no {
+    grid-area: no;
+  }
+</style>
