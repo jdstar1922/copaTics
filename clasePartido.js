@@ -14,10 +14,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/nuevopartido"
-        );
+        xhr.open("POST", "/api/nuevopartido");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -39,10 +36,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/modificapartido"
-        );
+        xhr.open("POST", "/api/modificapartido");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -64,10 +58,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/eliminapartido"
-        );
+        xhr.open("POST", "/api/eliminapartido");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -89,10 +80,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionatodos"
-        );
+        xhr.open("POST", "/api/seleccionatodos");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -114,10 +102,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionarpartidoporid"
-        );
+        xhr.open("POST", "/api/seleccionarpartidoporid");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -139,10 +124,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionarpornombre"
-        );
+        xhr.open("POST", "/api/seleccionarpornombre");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -165,10 +147,7 @@ class Partido {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionatodos"
-        );
+        xhr.open("POST", "/api/seleccionatodos");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {

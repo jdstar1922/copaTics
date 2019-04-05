@@ -14,10 +14,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/nuevousuario"
-        );
+        xhr.open("POST", "/api/nuevousuario");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -39,10 +36,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/modificausuario"
-        );
+        xhr.open("POST", "/api/modificausuario");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -64,10 +58,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/eliminausuario"
-        );
+        xhr.open("POST", "/api/eliminausuario");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -89,10 +80,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionausuario"
-        );
+        xhr.open("POST", "/api/seleccionausuario");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -114,10 +102,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionarporid"
-        );
+        xhr.open("POST", "/api/seleccionarporid");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -139,10 +124,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://copaticsproyecto.herokuapp.com/api/seleccionarpornombre"
-        );
+        xhr.open("POST", "/api/seleccionarpornombre");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
@@ -164,7 +146,7 @@ class _usuario {
       // Do the usual XHR stuff
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://copaticsproyecto.herokuapp.com/api/login");
+        xhr.open("POST", "/api/login");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
           if (xhr.status === 200) {
