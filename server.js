@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
-mongoose.connect("mongodb://todos:todos123@ds01716565/cedesprimerproyecto");
+mongoose.connect("mongodb://todos:todos123@ds017165/cedesprimerproyecto");
 //conecta con mongo
 const db = mongoose.connection;
 //almacena la conexion

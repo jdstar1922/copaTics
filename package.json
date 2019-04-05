@@ -1,5 +1,5 @@
 {
-  "name": "CopaTics",
+  "name": "copaTics",
   "version": "0.0.1",
   "description": "WebApp para organizar la copaTics",
   "main": "server.js",
